@@ -11,10 +11,12 @@ class MyObserver extends AutoRouterObserver {
   @override
   void didInitTabRoute(TabPageRoute route, TabPageRoute? previousRoute) {
     debugPrint('Tab route visited: ${route.name}');
+    debugPrint('Tab route visited: ${route.path}');
   }
   @override
   void didChangeTabRoute(TabPageRoute route, TabPageRoute previousRoute) {
     debugPrint('Tab route re-visited: ${route.name}');
+    debugPrint('Tab route re-visited: ${route.path}');
   }
   // ...
 }

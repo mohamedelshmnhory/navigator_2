@@ -6,7 +6,7 @@ part of 'categories_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CategoriesModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
+CategoriesModel _$CategoriesModelFromJson(Map<String, dynamic> json) =>
     CategoriesModel(
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => DataBean.fromJson(e as Map<String, dynamic>))
@@ -15,7 +15,7 @@ CategoriesModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
       status: json['status'] as bool?,
     );
 
-Map<String, dynamic> _$CategoryModelToJson(CategoriesModel instance) =>
+Map<String, dynamic> _$CategoriesModelToJson(CategoriesModel instance) =>
     <String, dynamic>{
       'data': instance.data,
       'message': instance.message,

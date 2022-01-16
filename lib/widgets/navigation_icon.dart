@@ -1,7 +1,6 @@
 import 'package:beautyapp/layout/cubit/cubit.dart';
 import 'package:beautyapp/shared/styles/colors.dart';
 import 'package:flutter/material.dart';
-
 import 'badge.dart';
 
 class NavigationIcon extends StatefulWidget {
@@ -10,6 +9,7 @@ class NavigationIcon extends StatefulWidget {
   final String icon;
   final String filledIcon;
   final String? notification;
+
   const NavigationIcon({
     Key? key,
     required this.cubit,
@@ -30,6 +30,7 @@ class _NavigationIconState extends State<NavigationIcon>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
+
   @override
   void initState() {
     super.initState();
@@ -77,7 +78,6 @@ class _NavigationIconState extends State<NavigationIcon>
                       child: MyIcon(widget: widget, animation: animation))
                   : MyIcon(widget: widget, animation: animation),
             ],
-
             Visibility(
               visible: widget.cubit.tabsRouter.activeIndex == widget.index,
               child: Text(
@@ -86,7 +86,7 @@ class _NavigationIconState extends State<NavigationIcon>
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 12,
+                    fontSize: 10,
                     fontWeight: FontWeight.bold,
                     color: widget.cubit.tabsRouter.activeIndex == widget.index
                         ? mainColor

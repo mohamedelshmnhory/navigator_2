@@ -1,5 +1,9 @@
+import 'package:beautyapp/layout/cubit/cubit.dart';
+import 'package:beautyapp/layout/layout.dart';
+import 'package:beautyapp/models/courses_model.dart';
 import 'package:beautyapp/routes/router.gr.dart';
 import 'package:beautyapp/shared/components/components.dart';
+import 'package:beautyapp/shared/components/constants.dart';
 import 'package:beautyapp/shared/styles/colors.dart';
 import 'package:beautyapp/shared/utils/size_config.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +15,11 @@ import 'package:auto_route/auto_route.dart';
 class CourseListItem extends StatefulWidget {
   CourseListItem({
     Key? key,
-    required this.image,
+    required this.course,
     this.isFav = true,
   }) : super(key: key);
 
-  final String image;
+  final Course course;
   bool isFav;
 
   @override
@@ -23,6 +27,7 @@ class CourseListItem extends StatefulWidget {
 }
 
 class _CourseListItemState extends State<CourseListItem> {
+  late final course = widget.course;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +51,7 @@ class _CourseListItemState extends State<CourseListItem> {
               width: double.infinity,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: PhotoWidget(photoLink: widget.image, canOpen: false)),
+              child: PhotoWidget(photoLink: bannerImages[0], canOpen: false)),
           Positioned(
             bottom: 0,
             right: 0,
@@ -73,7 +78,7 @@ class _CourseListItemState extends State<CourseListItem> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'برنامج العناية بالبشرة',
+                          course.name ?? '',
                           style: Theme.of(context)
                               .textTheme
                               .headline5!
@@ -87,8 +92,8 @@ class _CourseListItemState extends State<CourseListItem> {
                           width: 130,
                           height: 35,
                           function: () {
-                            context.router.push(
-                                CourseDetailsScreen(courseId: 'courseId'));
+                            context.router.push(CourseDetailsScreen(
+                                courseId: course.id!.toInt()));
                           },
                           text: 'التفاصيل',
                           textSize: 14,
@@ -123,7 +128,7 @@ class _CourseListItemState extends State<CourseListItem> {
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,
-                                ignoreGestures: true,
+                                ignoreGestures: false,
                                 itemPadding:
                                     const EdgeInsets.symmetric(horizontal: 1.0),
                                 itemBuilder: (context, _) => const Icon(

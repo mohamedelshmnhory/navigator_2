@@ -1,4 +1,6 @@
 import 'package:beautyapp/models/categories_model.dart';
+import 'package:beautyapp/models/course_model.dart';
+import 'package:beautyapp/models/courses_model.dart';
 import 'package:beautyapp/models/home_model.dart';
 
 abstract class LayoutStates {}
@@ -28,4 +30,29 @@ class CategoriesSuccessState extends LayoutStates {
 class CategoriesErrorState extends LayoutStates {
   final String? error;
   CategoriesErrorState(this.error);
+}
+
+
+class CoursesLoadingState extends LayoutStates {}
+
+class CoursesSuccessState extends LayoutStates {
+  final CoursesModel coursesModel;
+  CoursesSuccessState(this.coursesModel);
+}
+
+class CoursesErrorState extends LayoutStates {
+  final String? error;
+  CoursesErrorState(this.error);
+}
+
+class CourseLoadingState extends LayoutStates {}
+
+class CourseSuccessState extends LayoutStates {
+  final CourseModel courseModel;
+  CourseSuccessState(this.courseModel);
+}
+
+class CourseErrorState extends LayoutStates {
+  final String? error;
+  CourseErrorState(this.error);
 }

@@ -1,23 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:beautyapp/layout/cubit/states.dart';
 import 'package:beautyapp/models/categories_model.dart';
+import 'package:beautyapp/models/course_model.dart';
+import 'package:beautyapp/models/courses_model.dart';
 import 'package:beautyapp/models/home_model.dart';
 import 'package:beautyapp/shared/components/constants.dart';
 import 'package:beautyapp/shared/network/end_points.dart';
 import 'package:beautyapp/shared/network/remote/dio_helper.dart';
-// import 'package:beautyapp/modules/about.dart';
-// import 'package:beautyapp/modules/categories/categories_list_screen.dart';
-// import 'package:beautyapp/modules/certifications_screen.dart';
-// import 'package:beautyapp/modules/contact.dart';
-// import 'package:beautyapp/modules/favourites_list/favourites_list_screen.dart';
-// import 'package:beautyapp/modules/home/home_screen.dart';
-// import 'package:beautyapp/modules/my_courses/my_courses_list_screen.dart';
-// import 'package:beautyapp/modules/notifications.dart';
-// import 'package:beautyapp/modules/profile/profile_screen.dart';
-// import 'package:beautyapp/modules/search/search_screen.dart';
-// import 'package:beautyapp/modules/services/services_list_screen.dart';
-// import 'package:beautyapp/modules/trainers_list/trainers_list_screen.dart';
-// import 'package:beautyapp/widgets/should_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,7 +42,8 @@ class LayoutCubit extends Cubit<LayoutStates> {
 
   void getHome() async {
     emit(HomeLoadingState());
-    DioHelper.getData(
+
+    await DioHelper.getData(
       url: HOMEPOINT,
       token: userToken,
     ).then((value) {
@@ -65,9 +55,11 @@ class LayoutCubit extends Cubit<LayoutStates> {
         emit(HomeErrorState(value.data['message']));
       }
     }).catchError((error) {
-      debugPrint(error);
+      debugPrint(error.toString());
       emit(HomeErrorState(internetErrorMsg));
     });
+
+    return Future.value();
   }
 
   CategoriesModel? categoriesModel;
@@ -75,7 +67,7 @@ class LayoutCubit extends Cubit<LayoutStates> {
   void getCategories() async {
     emit(CategoriesLoadingState());
     DioHelper.getData(
-      url: CATEGORIES,
+      url: 'category/show',
       token: userToken,
     ).then((value) {
       debugPrint(value.data.toString());
@@ -86,8 +78,50 @@ class LayoutCubit extends Cubit<LayoutStates> {
         emit(CategoriesErrorState(value.data['message']));
       }
     }).catchError((error) {
-      debugPrint(error);
+      debugPrint(error.toString());
       emit(CategoriesErrorState(internetErrorMsg));
+    });
+  }
+
+  CoursesModel? coursesModel;
+
+  void getCourses({required int id}) async {
+    emit(CoursesLoadingState());
+    DioHelper.getData(
+      url: 'category/show/$id',
+      token: userToken,
+    ).then((value) {
+      debugPrint(value.data.toString());
+      if (value.data['status']) {
+        coursesModel = CoursesModel.fromJson(value.data);
+        emit(CoursesSuccessState(coursesModel!));
+      } else {
+        emit(CoursesErrorState(value.data['message']));
+      }
+    }).catchError((error) {
+      debugPrint(error.toString());
+      emit(CoursesErrorState(internetErrorMsg));
+    });
+  }
+
+  CourseModel? courseModel;
+
+  void getCourse({required int id}) async {
+    emit(CourseLoadingState());
+    DioHelper.getData(
+      url: 'Courses/show/$id',
+      token: userToken,
+    ).then((value) {
+      debugPrint(value.data.toString());
+      if (value.data['status']) {
+        courseModel = CourseModel.fromJson(value.data);
+        emit(CourseSuccessState(courseModel!));
+      } else {
+        emit(CourseErrorState(value.data['message']));
+      }
+    }).catchError((error) {
+      debugPrint(error.toString());
+      emit(CourseErrorState(internetErrorMsg));
     });
   }
 

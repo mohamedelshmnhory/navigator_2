@@ -1,4 +1,4 @@
-// import 'package:beautyapp/modules/courses/course_details_screen.dart';
+// import 'package:beautyapp/screens/courses/course_details_screen.dart';
 // import 'package:beautyapp/shared/components/components.dart';
 // import 'package:beautyapp/shared/styles/colors.dart';
 // import 'package:flutter/material.dart';

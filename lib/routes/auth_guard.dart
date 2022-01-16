@@ -10,6 +10,7 @@ var isAuthenticated = true;
 class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
+
     if (userToken == '') {
       // ignore: unawaited_futures
       // router.push(const LoginScreen()

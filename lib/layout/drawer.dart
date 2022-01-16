@@ -110,7 +110,7 @@ class AppDrawer extends StatelessWidget {
                     ).then((value) {
                       if (value) {
                         cubit.changeBottom(Taps.home);
-                       context.router.replace(const LoginScreen());
+                        context.router.replace(const LoginScreen());
                       }
                     });
                   }),
@@ -167,16 +167,25 @@ class DrawerButton extends StatelessWidget {
           showLoginDialog(context);
         }
       },
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-        child: Text(
-          item,
-          style: Theme.of(context)
-              .textTheme
-              .headline5!
-              .copyWith(fontSize: 16, color: mainColor),
-        ),
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            child: Text(
+              item,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(fontSize: 16, color: mainColor),
+            ),
+          ),
+          Divider(
+            color: mainColor.withOpacity(.5),
+            thickness: 1,
+            height: 8,
+          ),
+        ],
       ),
     );
   }

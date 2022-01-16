@@ -141,36 +141,6 @@ Widget defaultFormField({
       ),
     );
 
-Widget myDivider() => Padding(
-      padding: const EdgeInsetsDirectional.only(start: 10.0, end: 10),
-      child: Container(
-        width: double.infinity,
-        height: 1,
-        color: primary,
-      ),
-    );
-
-void navigateTo(context, widget) => Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget,
-      ),
-    );
-
-void navigateAndFinish(
-  context,
-  widget,
-) =>
-    Navigator.pushAndRemoveUntil(
-      context,
-      MaterialPageRoute(
-        builder: (context) => widget,
-      ),
-      (route) {
-        return false;
-      },
-    );
-
 void showSnack({
   required String text,
   SnackStates state = SnackStates.SUCCESS,
@@ -194,21 +164,14 @@ void showSnack({
 enum SnackStates { SUCCESS, ERROR, WARNING }
 
 Color? chooseToastColor(SnackStates state) {
-  Color? color;
-
   switch (state) {
     case SnackStates.SUCCESS:
-      color = mainColor.withOpacity(.5);
-      break;
+      return mainColor.withOpacity(.5);
     case SnackStates.ERROR:
-      color = Colors.redAccent.withOpacity(.5);
-      break;
+      return Colors.redAccent.withOpacity(.5);
     case SnackStates.WARNING:
-      color = Colors.redAccent.withOpacity(.5);
-      break;
+      return Colors.orangeAccent.withOpacity(.5);
   }
-
-  return color;
 }
 
 const spinkit = Center(
@@ -303,3 +266,25 @@ Stack buildDropdownMenu({
     ],
   );
 }
+
+
+// void navigateTo(context, widget) => Navigator.push(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => widget,
+//       ),
+//     );
+//
+// void navigateAndFinish(
+//   context,
+//   widget,
+// ) =>
+//     Navigator.pushAndRemoveUntil(
+//       context,
+//       MaterialPageRoute(
+//         builder: (context) => widget,
+//       ),
+//       (route) {
+//         return false;
+//       },
+//     );

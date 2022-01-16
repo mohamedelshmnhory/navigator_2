@@ -14,31 +14,31 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i28;
 
 import '../layout/layout.dart' as _i2;
-import '../modules/about.dart' as _i26;
-import '../modules/auth/auth_home.dart' as _i3;
-import '../modules/auth/login_screen.dart' as _i4;
-import '../modules/auth/register_screen.dart' as _i5;
-import '../modules/auth/splash.dart' as _i1;
-import '../modules/categories/categories_list_screen.dart' as _i21;
-import '../modules/certifications_screen.dart' as _i22;
-import '../modules/competitions/competition_details_screen.dart' as _i13;
-import '../modules/competitions/competitions_list_screen.dart' as _i12;
-import '../modules/contact.dart' as _i27;
-import '../modules/courses/course_details_screen.dart' as _i9;
-import '../modules/courses/courses_list_screen.dart' as _i8;
-import '../modules/exams/exams_screen.dart' as _i24;
-import '../modules/favourites_list/favourites_list_screen.dart' as _i14;
-import '../modules/home/home_screen.dart' as _i7;
-import '../modules/my_courses/my_course_details_screen.dart' as _i16;
-import '../modules/my_courses/my_courses_list_screen.dart' as _i15;
-import '../modules/notifications.dart' as _i20;
-import '../modules/profile/edit_profile_screen.dart' as _i19;
-import '../modules/profile/profile_screen.dart' as _i18;
-import '../modules/search/search_screen.dart' as _i17;
-import '../modules/service_details_screen.dart' as _i10;
-import '../modules/services/services_list_screen.dart' as _i25;
-import '../modules/trainer_details_screen.dart' as _i11;
-import '../modules/trainers_list/trainers_list_screen.dart' as _i23;
+import '../screens/about/about.dart' as _i26;
+import '../screens/auth/auth_home.dart' as _i3;
+import '../screens/auth/login_screen.dart' as _i4;
+import '../screens/auth/register_screen.dart' as _i5;
+import '../screens/auth/splash.dart' as _i1;
+import '../screens/categories/categories_list_screen.dart' as _i21;
+import '../screens/endorsements/endorsements_screen.dart' as _i22;
+import '../screens/competitions/competition_details_screen.dart' as _i13;
+import '../screens/competitions/competitions_list_screen.dart' as _i12;
+import '../screens/contact/contact.dart' as _i27;
+import '../screens/courses/course_details_screen.dart' as _i9;
+import '../screens/courses/courses_list_screen.dart' as _i8;
+import '../screens/exams/exams_screen.dart' as _i24;
+import '../screens/favourites/favourites_list_screen.dart' as _i14;
+import '../screens/home/home_screen.dart' as _i7;
+import '../screens/my_courses/my_course_details_screen.dart' as _i16;
+import '../screens/my_courses/my_courses_list_screen.dart' as _i15;
+import '../screens/notifications/notifications.dart' as _i20;
+import '../screens/profile/edit_profile_screen.dart' as _i19;
+import '../screens/profile/profile_screen.dart' as _i18;
+import '../screens/search/search_screen.dart' as _i17;
+import '../screens/services/service_details_screen.dart' as _i10;
+import '../screens/services/services_list_screen.dart' as _i25;
+import '../screens/trainers/trainer_details_screen.dart' as _i11;
+import '../screens/trainers/trainers_list_screen.dart' as _i23;
 import '../widgets/category_item.dart' as _i31;
 import '../widgets/service_item.dart' as _i30;
 import 'auth_guard.dart' as _i29;
@@ -132,17 +132,16 @@ class AppRouter extends _i6.RootStackRouter {
     CoursesListScreen.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<CoursesListScreenArgs>(
-          orElse: () =>
-              CoursesListScreenArgs(title: pathParams.getString('title')));
+          orElse: () => CoursesListScreenArgs(id: pathParams.getInt('id')));
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i8.CoursesListScreen(key: args.key, title: args.title));
+          child: _i8.CoursesListScreen(key: args.key, id: args.id));
     },
     CourseDetailsScreen.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<CourseDetailsScreenArgs>(
-          orElse: () => CourseDetailsScreenArgs(
-              courseId: pathParams.getString('courseId')));
+          orElse: () =>
+              CourseDetailsScreenArgs(courseId: pathParams.getInt('courseId')));
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
           child:
@@ -248,7 +247,7 @@ class AppRouter extends _i6.RootStackRouter {
               children: [
                 _i6.RouteConfig(Home.name, path: '', parent: HomeTab.name),
                 _i6.RouteConfig(CoursesListScreen.name,
-                    path: ':title',
+                    path: ':id',
                     parent: HomeTab.name,
                     meta: <String, dynamic>{'hideBottomNav': true}),
                 _i6.RouteConfig(CourseDetailsScreen.name,
@@ -325,7 +324,7 @@ class AppRouter extends _i6.RootStackRouter {
                 _i6.RouteConfig(Courses.name,
                     path: '', parent: CategoriesTab.name),
                 _i6.RouteConfig(CoursesListScreen.name,
-                    path: ':title',
+                    path: ':id',
                     parent: CategoriesTab.name,
                     meta: <String, dynamic>{'hideBottomNav': true}),
                 _i6.RouteConfig(CourseDetailsScreen.name,
@@ -568,32 +567,32 @@ class Home extends _i6.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.CoursesListScreen]
 class CoursesListScreen extends _i6.PageRouteInfo<CoursesListScreenArgs> {
-  CoursesListScreen({_i28.Key? key, required String title})
+  CoursesListScreen({_i28.Key? key, required int id})
       : super(CoursesListScreen.name,
-            path: ':title',
-            args: CoursesListScreenArgs(key: key, title: title),
-            rawPathParams: {'title': title});
+            path: ':id',
+            args: CoursesListScreenArgs(key: key, id: id),
+            rawPathParams: {'id': id});
 
   static const String name = 'CoursesListScreen';
 }
 
 class CoursesListScreenArgs {
-  const CoursesListScreenArgs({this.key, required this.title});
+  const CoursesListScreenArgs({this.key, required this.id});
 
   final _i28.Key? key;
 
-  final String title;
+  final int id;
 
   @override
   String toString() {
-    return 'CoursesListScreenArgs{key: $key, title: $title}';
+    return 'CoursesListScreenArgs{key: $key, id: $id}';
   }
 }
 
 /// generated route for
 /// [_i9.CourseDetailsScreen]
 class CourseDetailsScreen extends _i6.PageRouteInfo<CourseDetailsScreenArgs> {
-  CourseDetailsScreen({_i28.Key? key, required String courseId})
+  CourseDetailsScreen({_i28.Key? key, required int courseId})
       : super(CourseDetailsScreen.name,
             path: ':courseId',
             args: CourseDetailsScreenArgs(key: key, courseId: courseId),
@@ -607,7 +606,7 @@ class CourseDetailsScreenArgs {
 
   final _i28.Key? key;
 
-  final String courseId;
+  final int courseId;
 
   @override
   String toString() {

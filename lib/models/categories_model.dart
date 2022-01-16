@@ -10,9 +10,9 @@ class CategoriesModel {
 
   CategoriesModel({this.data, this.message, this.status});
 
-  factory CategoriesModel.fromJson(Map<String, dynamic> json) => _$CategoryModelFromJson(json);
+  factory CategoriesModel.fromJson(Map<String, dynamic> json) => _$CategoriesModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CategoryModelToJson(this);
+  Map<String, dynamic> toJson() => _$CategoriesModelToJson(this);
 }
 
 @JsonSerializable()

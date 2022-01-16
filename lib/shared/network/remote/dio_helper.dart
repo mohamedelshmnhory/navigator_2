@@ -8,7 +8,7 @@ class DioHelper {
   static init() async {
     dio = Dio(
       BaseOptions(
-        baseUrl: '',
+        baseUrl: 'https://bradabeauty-ac.com/api/',
         receiveDataWhenStatusError: true,
       ),
     );

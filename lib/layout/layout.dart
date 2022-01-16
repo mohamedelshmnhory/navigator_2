@@ -9,9 +9,9 @@ import 'cubit/cubit.dart';
 import 'cubit/states.dart';
 import 'drawer.dart';
 import 'taps_name.dart';
-import 'package:get_it/get_it.dart';
+// import 'package:get_it/get_it.dart';
 
-final getIt = GetIt.instance;
+// final getIt = GetIt.instance;
 
 class Taps {
   static const int home = 0;
@@ -61,27 +61,31 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    getIt.registerSingleton<LayoutCubit>(LayoutCubit.get(context),
-        signalsReady: true);
-    layoutCubit = getIt<LayoutCubit>();
+    // getIt.registerSingleton<LayoutCubit>(LayoutCubit.get(context),
+    //     signalsReady: true);
+    layoutCubit = LayoutCubit.get(context);
+    initAnimation();
+    super.initState();
+  }
+
+  void initAnimation() {
     layoutCubit.animationController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
     layoutCubit.menuButton = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 600));
-    super.initState();
   }
 
   @override
   void dispose() {
     layoutCubit.dispose();
-    getIt.reset();
+    // getIt.reset();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    SizeConfig().init(context);
+    // Size size = MediaQuery.of(context).size;
+    // SizeConfig().init(context);
     return BlocProvider.value(
       value: layoutCubit,
       child: BlocConsumer<LayoutCubit, LayoutStates>(
@@ -128,10 +132,11 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
                         //   child: buildAnimationBody(
                         //       scaleSmall, size, 130, reverse),
                         // ),
-                        buildAnimationBody(scale, size, 80, reverse),
+                        buildAnimationBody(
+                            scale, SizeConfig.size!, 80, reverse),
                         Transform.translate(
                             offset: Offset(
-                                -size.width *
+                                -SizeConfig.size!.width *
                                     (1 -
                                         layoutCubit.animationController.value) *
                                     reverse,

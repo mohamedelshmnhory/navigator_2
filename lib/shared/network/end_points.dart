@@ -18,7 +18,7 @@ const PROFILE = 'auth/user-profile';
 
 const EDITPROFILE = 'auth/update';
 
-const CATEGORIES = 'category/showAll';
+const CATEGORIES = 'category/show';
 
 const HOMEPOINT = 'Home/showAllPages';
 
