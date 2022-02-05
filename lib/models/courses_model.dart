@@ -4,13 +4,14 @@ part 'courses_model.g.dart';
 
 @JsonSerializable()
 class CoursesModel {
-  List<Course> data;
-  String message;
-  bool status;
+  List<Course>? data;
+  String? message;
+  bool? status;
 
-  CoursesModel({required this.data, required this.message, required this.status});
+  CoursesModel({this.data, this.message, this.status});
 
-  factory CoursesModel.fromJson(Map<String, dynamic> json) => _$CoursesModelFromJson(json);
+  factory CoursesModel.fromJson(Map<String, dynamic> json) =>
+      _$CoursesModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$CoursesModelToJson(this);
 }
@@ -35,11 +36,31 @@ class Course {
   num? categories_id;
   String? created_at;
   String? updated_at;
+  bool? is_fav;
 
-  Course({this.id, this.name, this.image, this.lectures, this.duration, this.level, this.language, this.assessments, this.description, this.certification, this.fullDescription, this.active, this.price, this.list, this.instructor_id, this.categories_id, this.created_at, this.updated_at});
+  Course({
+    this.id,
+    this.name,
+    this.image,
+    this.lectures,
+    this.duration,
+    this.level,
+    this.language,
+    this.assessments,
+    this.description,
+    this.certification,
+    this.fullDescription,
+    this.active,
+    this.price,
+    this.list,
+    this.instructor_id,
+    this.categories_id,
+    this.created_at,
+    this.updated_at,
+    this.is_fav = false,
+  });
 
   factory Course.fromJson(Map<String, dynamic> json) => _$CourseFromJson(json);
 
   Map<String, dynamic> toJson() => _$CourseToJson(this);
 }
-

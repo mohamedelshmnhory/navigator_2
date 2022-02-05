@@ -33,7 +33,7 @@
          <string>mg.com</string>
          <key>CFBundleURLSchemes</key>
          <array>
-         <string>mg</string>
+         <string>http</string>
          </array>
          </dict>
         </array>

@@ -1,13 +1,13 @@
-import 'package:beautyapp/shared/components/components.dart';
+import 'package:beautyapp/models/trainers_model.dart';
 import 'package:beautyapp/shared/components/constants.dart';
 import 'package:beautyapp/shared/styles/colors.dart';
-import 'package:beautyapp/widgets/category_item.dart';
 import 'package:beautyapp/widgets/photo_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class TrainerDetailsScreen extends StatelessWidget {
-  final Category category;
-  const TrainerDetailsScreen({Key? key, required this.category})
+  final Trainer trainer;
+  const TrainerDetailsScreen({Key? key, required this.trainer})
       : super(key: key);
 
   @override
@@ -45,7 +45,7 @@ class TrainerDetailsScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: PhotoWidget(
-                            photoLink: category.image, canOpen: false),
+                            photoLink: trainer.image, canOpen: false),
                       ),
                       const SizedBox(width: 10),
                       Column(
@@ -58,7 +58,7 @@ class TrainerDetailsScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  category.name??'',
+                                  trainer.name ?? '',
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline5!
@@ -68,7 +68,7 @@ class TrainerDetailsScreen extends StatelessWidget {
                                   textDirection: TextDirection.rtl,
                                 ),
                                 Text(
-                                  'خبيرة في أدوات التجميل',
+                                  trainer.title ?? '',
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline5!
@@ -112,14 +112,16 @@ class TrainerDetailsScreen extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   textDirection: TextDirection.rtl,
                 ),
-                Text(
-                  'يتمتع معالجو التجميل المؤهلون بعدد لا يحصى من الفرص. بصرف النظر عن كونها مهنة مجزية من الناحية المالية ،هناك رضا شخصي في مساعدة الآخرين على الشعور والمظهربشكل أفضل. يمكنك أيضًا توسيع الشبكة الاجتماعية عندماتقابل عملاء من مختلف الصناعات ومناحي الحياة.',
-                  style: Theme.of(context).textTheme.headline3!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Colors.black),
-                  textDirection: TextDirection.rtl,
-                ),
+                Html(data: trainer.experience),
+                Html(data: trainer.description),
+                // Text(
+                //   'يتمتع معالجو التجميل المؤهلون بعدد لا يحصى من الفرص. بصرف النظر عن كونها مهنة مجزية من الناحية المالية ،هناك رضا شخصي في مساعدة الآخرين على الشعور والمظهربشكل أفضل. يمكنك أيضًا توسيع الشبكة الاجتماعية عندماتقابل عملاء من مختلف الصناعات ومناحي الحياة.',
+                //   style: Theme.of(context).textTheme.headline3!.copyWith(
+                //       fontWeight: FontWeight.bold,
+                //       fontSize: 14,
+                //       color: Colors.black),
+                //   textDirection: TextDirection.rtl,
+                // ),
               ],
             ),
           ),

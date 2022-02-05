@@ -118,91 +118,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       // ),
                       // SizedBox(height: vSpace(1)),
                       DropdownButtonFormField2(
-                        decoration: const InputDecoration(
-                          //Add isDense true and zero Padding.
-                          //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
-                          isDense: true,
-                          contentPadding: EdgeInsets.zero,
-                          border: OutlineInputBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: .5),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: .5),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: .5),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.transparent, width: .5),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                          ),
-
-                          fillColor: Colors.white,
-                          focusColor: Colors.white,
-                          //Add more decoration as you want here
-                          //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                        ),
-                        buttonDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            width: 1.5,
-                            color: mainColor,
-                          ),
-                          color: Colors.white,
-                        ),
-                        isExpanded: true,
-                        hint: const Text(
-                          'النوع',
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_sharp,
-                          color: mainColor,
-                        ),
-                        iconSize: 25,
-                        buttonHeight: 50,
-                        buttonPadding:
-                            const EdgeInsets.only(left: 10, right: 20),
-                        dropdownDecoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        items: [Gender.male, Gender.female]
-                            .map((item) => DropdownMenuItem<Gender>(
-                                  value: item,
-                                  alignment: Alignment.centerRight,
-                                  child: Text(
-                                    item.name == 'male' ? 'ذكر' : 'انثى',
-                                    style: const TextStyle(
-                                      fontSize: 14,
+                          // dropdownMaxHeight: 200,
+                          decoration: buildInputDecoration,
+                          buttonDecoration: buildBoxDecoration,
+                          isExpanded: true,
+                          hint: const Text('النوع',
+                              style: TextStyle(fontSize: 14)),
+                          icon: const Icon(Icons.keyboard_arrow_down_sharp,
+                              color: mainColor),
+                          iconSize: 25,
+                          buttonHeight: 50,
+                          buttonPadding:
+                              const EdgeInsets.only(left: 10, right: 20),
+                          dropdownDecoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10)),
+                          items: [Gender.male, Gender.female]
+                              .map((item) => DropdownMenuItem<Gender>(
+                                    value: item,
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      item.name == 'male' ? 'ذكر' : 'انثى',
+                                      style: const TextStyle(fontSize: 14),
+                                      textAlign: TextAlign.start,
+                                      textDirection: TextDirection.rtl,
                                     ),
-                                    textAlign: TextAlign.start,
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                ))
-                            .toList(),
-                        validator: (value) {
-                          if (value == null) {
-                            return '   ' + emptyError;
-                          }
-                        },
-                        onChanged: (Gender? value) {
-                          genderId = value!.index;
-                        },
-                        onSaved: (Gender? value) {
-                          genderId = value!.index;
-                        },
-                      ),
+                                  ))
+                              .toList(),
+                          validator: (value) {
+                            if (value == null) {
+                              return '   ' + emptyError;
+                            }
+                          },
+                          onChanged: (Gender? value) {
+                            genderId = value!.index;
+                          }),
                       SizedBox(height: vSpace(1)),
                       defaultFormField(
                         controller: passwordController,
@@ -243,7 +192,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               CacheHelper.saveData(
                                       key: 'userToken', value: userToken)
                                   .then((value) {
-                                // context.router.replace(const LayoutRoute());
+                                context.router.replaceNamed('/layout');
                               });
                             }
                           }
@@ -313,6 +262,47 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  BoxDecoration get buildBoxDecoration {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(10),
+      border: Border.all(
+        width: 1.5,
+        color: mainColor,
+      ),
+      color: Colors.white,
+    );
+  }
+
+  InputDecoration get buildInputDecoration {
+    return const InputDecoration(
+      //Add isDense true and zero Padding.
+      //Add Horizontal padding using buttonPadding and Vertical padding by increasing buttonHeight instead of add Padding here so that The whole TextField Button become clickable, and also the dropdown menu open under The whole TextField Button.
+      isDense: true,
+      contentPadding: EdgeInsets.zero,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderSide: BorderSide(color: Colors.transparent, width: .5),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.transparent, width: .5),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.transparent, width: .5),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.transparent, width: .5),
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+      ),
+
+      fillColor: Colors.white,
+      focusColor: Colors.white,
+      //Add more decoration as you want here
+      //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
     );
   }
 }

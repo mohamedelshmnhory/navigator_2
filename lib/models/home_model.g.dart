@@ -31,7 +31,7 @@ DataBean _$DataBeanFromJson(Map<String, dynamic> json) => DataBean(
           ?.map((e) => CompetitonsBean.fromJson(e as Map<String, dynamic>))
           .toList(),
       instructors: (json['instructors'] as List<dynamic>?)
-          ?.map((e) => InstructorsBean.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Trainer.fromJson(e as Map<String, dynamic>))
           .toList(),
       offers: (json['offers'] as List<dynamic>?)
           ?.map((e) => OffersBean.fromJson(e as Map<String, dynamic>))
@@ -39,7 +39,9 @@ DataBean _$DataBeanFromJson(Map<String, dynamic> json) => DataBean(
       students: (json['students'] as List<dynamic>?)
           ?.map((e) => StudentsBean.fromJson(e as Map<String, dynamic>))
           .toList(),
-      services: json['services'],
+      services: (json['services'] as List<dynamic>?)
+          ?.map((e) => Service.fromJson(e as Map<String, dynamic>))
+          .toList(),
       Video: (json['Video'] as List<dynamic>?)
           ?.map((e) => VideoBean.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -88,20 +90,6 @@ OffersBean _$OffersBeanFromJson(Map<String, dynamic> json) => OffersBean(
     );
 
 Map<String, dynamic> _$OffersBeanToJson(OffersBean instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'image': instance.image,
-    };
-
-InstructorsBean _$InstructorsBeanFromJson(Map<String, dynamic> json) =>
-    InstructorsBean(
-      id: json['id'] as num?,
-      name: json['name'] as String?,
-      image: json['image'] as String?,
-    );
-
-Map<String, dynamic> _$InstructorsBeanToJson(InstructorsBean instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

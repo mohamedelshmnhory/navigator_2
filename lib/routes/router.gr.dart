@@ -14,13 +14,15 @@ import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i28;
 
 import '../layout/layout.dart' as _i2;
+import '../models/services_model.dart' as _i30;
+import '../models/trainers_model.dart' as _i31;
 import '../screens/about/about.dart' as _i26;
 import '../screens/auth/auth_home.dart' as _i3;
 import '../screens/auth/login_screen.dart' as _i4;
 import '../screens/auth/register_screen.dart' as _i5;
 import '../screens/auth/splash.dart' as _i1;
 import '../screens/categories/categories_list_screen.dart' as _i21;
-import '../screens/endorsements/endorsements_screen.dart' as _i22;
+import '../screens/certifications/endorsements_screen.dart' as _i22;
 import '../screens/competitions/competition_details_screen.dart' as _i13;
 import '../screens/competitions/competitions_list_screen.dart' as _i12;
 import '../screens/contact/contact.dart' as _i27;
@@ -39,8 +41,6 @@ import '../screens/services/service_details_screen.dart' as _i10;
 import '../screens/services/services_list_screen.dart' as _i25;
 import '../screens/trainers/trainer_details_screen.dart' as _i11;
 import '../screens/trainers/trainers_list_screen.dart' as _i23;
-import '../widgets/category_item.dart' as _i31;
-import '../widgets/service_item.dart' as _i30;
 import 'auth_guard.dart' as _i29;
 
 class AppRouter extends _i6.RootStackRouter {
@@ -132,7 +132,7 @@ class AppRouter extends _i6.RootStackRouter {
     CoursesListScreen.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<CoursesListScreenArgs>(
-          orElse: () => CoursesListScreenArgs(id: pathParams.getInt('id')));
+          orElse: () => CoursesListScreenArgs(id: pathParams.optInt('id')));
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i8.CoursesListScreen(key: args.key, id: args.id));
@@ -140,12 +140,10 @@ class AppRouter extends _i6.RootStackRouter {
     CourseDetailsScreen.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<CourseDetailsScreenArgs>(
-          orElse: () =>
-              CourseDetailsScreenArgs(courseId: pathParams.getInt('courseId')));
+          orElse: () => CourseDetailsScreenArgs(id: pathParams.optInt('id')));
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
-          child:
-              _i9.CourseDetailsScreen(key: args.key, courseId: args.courseId));
+          child: _i9.CourseDetailsScreen(key: args.key, id: args.id));
     },
     ServiceDetailsScreen.name: (routeData) {
       final args = routeData.argsAs<ServiceDetailsScreenArgs>();
@@ -158,8 +156,8 @@ class AppRouter extends _i6.RootStackRouter {
       final args = routeData.argsAs<TrainerDetailsScreenArgs>();
       return _i6.MaterialPageX<dynamic>(
           routeData: routeData,
-          child: _i11.TrainerDetailsScreen(
-              key: args.key, category: args.category));
+          child:
+              _i11.TrainerDetailsScreen(key: args.key, trainer: args.trainer));
     },
     CompetitionsListScreen.name: (routeData) {
       final args = routeData.argsAs<CompetitionsListScreenArgs>();
@@ -211,7 +209,7 @@ class AppRouter extends _i6.RootStackRouter {
     },
     Endorsements.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i22.EndorsementsScreen());
+          routeData: routeData, child: const _i22.CertificationScreen());
     },
     Trainers.name: (routeData) {
       return _i6.MaterialPageX<dynamic>(
@@ -251,7 +249,7 @@ class AppRouter extends _i6.RootStackRouter {
                     parent: HomeTab.name,
                     meta: <String, dynamic>{'hideBottomNav': true}),
                 _i6.RouteConfig(CourseDetailsScreen.name,
-                    path: ':courseId',
+                    path: 'CourseDetailsScreen/:id',
                     parent: HomeTab.name,
                     meta: <String, dynamic>{'hideBottomNav': true}),
                 _i6.RouteConfig(ServiceDetailsScreen.name,
@@ -278,7 +276,7 @@ class AppRouter extends _i6.RootStackRouter {
                 _i6.RouteConfig(Favourite.name,
                     path: '', parent: FavouriteTab.name),
                 _i6.RouteConfig(CourseDetailsScreen.name,
-                    path: ':courseId',
+                    path: 'CourseDetailsScreen/:id',
                     parent: FavouriteTab.name,
                     meta: <String, dynamic>{'hideBottomNav': true})
               ]),
@@ -297,7 +295,11 @@ class AppRouter extends _i6.RootStackRouter {
               path: 'search',
               parent: Layout.name,
               children: [
-                _i6.RouteConfig(Search.name, path: '', parent: SearchTab.name)
+                _i6.RouteConfig(Search.name, path: '', parent: SearchTab.name),
+                _i6.RouteConfig(CourseDetailsScreen.name,
+                    path: 'CourseDetailsScreen/:id',
+                    parent: SearchTab.name,
+                    meta: <String, dynamic>{'hideBottomNav': true})
               ]),
           _i6.RouteConfig(ProfileTab.name,
               path: 'profile',
@@ -328,12 +330,17 @@ class AppRouter extends _i6.RootStackRouter {
                     parent: CategoriesTab.name,
                     meta: <String, dynamic>{'hideBottomNav': true}),
                 _i6.RouteConfig(CourseDetailsScreen.name,
-                    path: ':courseId',
+                    path: 'CourseDetailsScreen/:id',
                     parent: CategoriesTab.name,
-                    meta: <String, dynamic>{'hideBottomNav': true})
+                    meta: <String, dynamic>{'hideBottomNav': true}),
+                _i6.RouteConfig('*#redirect',
+                    path: '*',
+                    parent: CategoriesTab.name,
+                    redirectTo: '',
+                    fullMatch: true)
               ]),
           _i6.RouteConfig(EndorsementsTab.name,
-              path: 'endorsements',
+              path: 'certifications',
               parent: Layout.name,
               children: [
                 _i6.RouteConfig(Endorsements.name,
@@ -381,13 +388,7 @@ class AppRouter extends _i6.RootStackRouter {
               ])
         ]),
         _i6.RouteConfig(AuthHome.name, path: '/auth_home'),
-        _i6.RouteConfig(LoginScreen.name, path: '/login', children: [
-          _i6.RouteConfig('*#redirect',
-              path: '*',
-              parent: LoginScreen.name,
-              redirectTo: '',
-              fullMatch: true)
-        ]),
+        _i6.RouteConfig(LoginScreen.name, path: '/login'),
         _i6.RouteConfig(RegisterScreen.name, path: '/signup'),
         _i6.RouteConfig('*#redirect',
             path: '*', redirectTo: '/layout', fullMatch: true)
@@ -422,8 +423,7 @@ class AuthHome extends _i6.PageRouteInfo<void> {
 /// generated route for
 /// [_i4.LoginScreen]
 class LoginScreen extends _i6.PageRouteInfo<void> {
-  const LoginScreen({List<_i6.PageRouteInfo>? children})
-      : super(LoginScreen.name, path: '/login', initialChildren: children);
+  const LoginScreen() : super(LoginScreen.name, path: '/login');
 
   static const String name = 'LoginScreen';
 }
@@ -506,7 +506,7 @@ class CategoriesTab extends _i6.PageRouteInfo<void> {
 class EndorsementsTab extends _i6.PageRouteInfo<void> {
   const EndorsementsTab({List<_i6.PageRouteInfo>? children})
       : super(EndorsementsTab.name,
-            path: 'endorsements', initialChildren: children);
+            path: 'certifications', initialChildren: children);
 
   static const String name = 'EndorsementsTab';
 }
@@ -567,7 +567,7 @@ class Home extends _i6.PageRouteInfo<void> {
 /// generated route for
 /// [_i8.CoursesListScreen]
 class CoursesListScreen extends _i6.PageRouteInfo<CoursesListScreenArgs> {
-  CoursesListScreen({_i28.Key? key, required int id})
+  CoursesListScreen({_i28.Key? key, int? id})
       : super(CoursesListScreen.name,
             path: ':id',
             args: CoursesListScreenArgs(key: key, id: id),
@@ -577,11 +577,11 @@ class CoursesListScreen extends _i6.PageRouteInfo<CoursesListScreenArgs> {
 }
 
 class CoursesListScreenArgs {
-  const CoursesListScreenArgs({this.key, required this.id});
+  const CoursesListScreenArgs({this.key, this.id});
 
   final _i28.Key? key;
 
-  final int id;
+  final int? id;
 
   @override
   String toString() {
@@ -592,25 +592,25 @@ class CoursesListScreenArgs {
 /// generated route for
 /// [_i9.CourseDetailsScreen]
 class CourseDetailsScreen extends _i6.PageRouteInfo<CourseDetailsScreenArgs> {
-  CourseDetailsScreen({_i28.Key? key, required int courseId})
+  CourseDetailsScreen({_i28.Key? key, int? id})
       : super(CourseDetailsScreen.name,
-            path: ':courseId',
-            args: CourseDetailsScreenArgs(key: key, courseId: courseId),
-            rawPathParams: {'courseId': courseId});
+            path: 'CourseDetailsScreen/:id',
+            args: CourseDetailsScreenArgs(key: key, id: id),
+            rawPathParams: {'id': id});
 
   static const String name = 'CourseDetailsScreen';
 }
 
 class CourseDetailsScreenArgs {
-  const CourseDetailsScreenArgs({this.key, required this.courseId});
+  const CourseDetailsScreenArgs({this.key, this.id});
 
   final _i28.Key? key;
 
-  final int courseId;
+  final int? id;
 
   @override
   String toString() {
-    return 'CourseDetailsScreenArgs{key: $key, courseId: $courseId}';
+    return 'CourseDetailsScreenArgs{key: $key, id: $id}';
   }
 }
 
@@ -641,24 +641,24 @@ class ServiceDetailsScreenArgs {
 /// generated route for
 /// [_i11.TrainerDetailsScreen]
 class TrainerDetailsScreen extends _i6.PageRouteInfo<TrainerDetailsScreenArgs> {
-  TrainerDetailsScreen({_i28.Key? key, required _i31.Category category})
+  TrainerDetailsScreen({_i28.Key? key, required _i31.Trainer trainer})
       : super(TrainerDetailsScreen.name,
             path: ':trainer',
-            args: TrainerDetailsScreenArgs(key: key, category: category));
+            args: TrainerDetailsScreenArgs(key: key, trainer: trainer));
 
   static const String name = 'TrainerDetailsScreen';
 }
 
 class TrainerDetailsScreenArgs {
-  const TrainerDetailsScreenArgs({this.key, required this.category});
+  const TrainerDetailsScreenArgs({this.key, required this.trainer});
 
   final _i28.Key? key;
 
-  final _i31.Category category;
+  final _i31.Trainer trainer;
 
   @override
   String toString() {
-    return 'TrainerDetailsScreenArgs{key: $key, category: $category}';
+    return 'TrainerDetailsScreenArgs{key: $key, trainer: $trainer}';
   }
 }
 
@@ -794,7 +794,7 @@ class Courses extends _i6.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i22.EndorsementsScreen]
+/// [_i22.CertificationScreen]
 class Endorsements extends _i6.PageRouteInfo<void> {
   const Endorsements() : super(Endorsements.name, path: '');
 

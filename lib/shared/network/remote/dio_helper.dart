@@ -25,8 +25,10 @@ class DioHelper {
     return await dio.get(
       url,
       queryParameters: query,
-      options:
-          Options(headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}),
+      options: Options(
+          headers: token == ''
+              ? {}
+              : {HttpHeaders.authorizationHeader: 'Bearer $token'}),
     );
   }
 
@@ -41,8 +43,10 @@ class DioHelper {
       url,
       queryParameters: query,
       data: data,
-      options:
-          Options(headers: {HttpHeaders.authorizationHeader: 'Bearer $token'}),
+      options: Options(
+          headers: token == ''
+              ? {}
+              : {HttpHeaders.authorizationHeader: 'Bearer $token'}),
     );
   }
 

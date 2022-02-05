@@ -1,7 +1,5 @@
 import 'package:beautyapp/shared/components/image_paths.dart';
 import 'package:beautyapp/widgets/category_item.dart';
-import 'package:beautyapp/widgets/edorsement_item.dart';
-import 'package:beautyapp/widgets/service_item.dart';
 import 'package:beautyapp/widgets/trainer_item.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,13 +25,6 @@ const List<String> bannerImages = [
 
 const List<String> offers = ['assets/temp/9090.png'];
 
-const List<String> courseGoals = [
-  'تشخيص ومعالجة البشرة الطبيعية',
-  'تشخيص ومعالجة البشرة الجافة',
-  'تنفيذ اجراءات السلامة',
-  'تشخيص ومعالجة البشرة المركبة “المزدوجة',
-  'الحالات التي تطرأ على البشرة',
-];
 
 final List<Trainer> trainers = [
   Trainer(
@@ -66,24 +57,6 @@ final List<Trainer> trainers = [
   ),
 ];
 
-final List<Category> categories = [
-  Category(
-    image: 'assets/temp/1.jpeg',
-    name: 'تصفيف الشعر',
-  ),
-  Category(
-    image: 'assets/temp/2.jpeg',
-    name: 'العلاج التجميلي',
-  ),
-  Category(
-    image: 'assets/temp/3.jpeg',
-    name: 'فن المكياج',
-  ),
-  Category(
-    image: 'assets/temp/4.jpeg',
-    name: 'العناية بالبشرة',
-  ),
-];
 
 final List<Category> students = [
   Category(
@@ -108,66 +81,6 @@ final List<Category> students = [
   ),
 ];
 
-final List<Service> services = [
-  Service(
-    image: 'assets/temp/01.png',
-    name: 'صناعة البراندات',
-  ),
-  Service(
-    image: 'assets/temp/02.jpeg',
-    name: 'خبيرات التجميل',
-  ),
-  Service(
-    image: 'assets/temp/04.jpeg',
-    name: 'صالونات التجميل',
-  ),
-  Service(
-    image: 'assets/temp/03.jpeg',
-    name: 'خدمة المتاجر',
-  ),
-];
-
-final List<Endorsement> endorsements = [
-  Endorsement(
-    image: 'assets/temp/Mask Group 14.png',
-    name: 'المركز الدولي',
-    num: '45758',
-  ),
-  Endorsement(
-    image: 'assets/temp/Mask Group 14.png',
-    name: 'المركز الدولي',
-    num: '45758',
-  ),
-  Endorsement(
-    image: 'assets/temp/Mask Group 15.png',
-    name: 'المركز الدولي',
-    num: '45758',
-  ),
-  Endorsement(
-    image: 'assets/temp/Mask Group 15.png',
-    name: 'المركز الدولي',
-    num: '45758',
-  ),
-];
-
-class Goal {
-  final String? title;
-  final String? text;
-  Goal({this.title, this.text});
-}
-
-final List<Goal> goals = [
-  Goal(
-    title: 'نحن الأفضل',
-    text:
-        'نحن نفخر بانفسنا علي المعايير العالية لتقديم  الدورات يتم تشغيل جميع الدورات مع مجموعات صغيرة من الطلب لكل مدرب',
-  ),
-  Goal(
-    title: 'أفضل المدربين والخبراء',
-    text:
-        'نحن نفخر بانفسنا علي المعايير العالية لتقديم  الدورات يتم تشغيل جميع الدورات مع مجموعات صغيرة من الطلب لكل مدرب',
-  ),
-];
 
 class Social {
   final String link;
@@ -194,10 +107,3 @@ final List<Social> socialIcons = [
       link: 'https://wa.me/+201018064080',
       icon: getAssetImage(ImagePathName.whatsapp)),
 ];
-//  const List<String> categories = [
-//   'التجميل',
-//   'العناية بالبشرة',
-//   'الشعر والصيحات',
-//   'صناعة العطور',
-//   'صناعة العطور',
-// ];

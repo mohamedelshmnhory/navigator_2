@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:beautyapp/screens/profile/routes.dart';
 import 'package:flutter/cupertino.dart';
 
 class MyObserver extends AutoRouterObserver {

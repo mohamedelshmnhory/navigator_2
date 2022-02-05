@@ -13,50 +13,28 @@ import 'taps_name.dart';
 
 // final getIt = GetIt.instance;
 
-class Taps {
-  static const int home = 0;
-  static const int favourites = 1;
-  static const int myCourses = 2;
-  static const int search = 3;
-  static const int profile = 4;
-  static const int notifications = 5;
-  static const int courses = 6;
-  static const int endorsements = 7;
-  static const int trainers = 8;
-  static const int exams = 9;
-  static const int services = 10;
-  static const int about = 11;
-  static const int contact = 12;
-  static const int share = 13;
-  static const int logout = 14;
-}
-
-const List<String> navItems = [
-  'الرئيسية',
-  'المفضلة',
-  'تدريباتي',
-  'البحث',
-  'البروفايل',
-  'الاشعارات',
-  'دوراتنا',
-  'الاعتمادات',
-  'الخبراء',
-  'الإختبارات',
-  'الخدمات',
-  'قالو عنا',
-  'اتصل بنا',
-  'مشاركة',
-  'تسجيل الخروج',
-];
-
-class Layout extends StatefulWidget {
+class Layout extends StatelessWidget {
   const Layout({Key? key}) : super(key: key);
 
   @override
-  _LayoutState createState() => _LayoutState();
+  Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    return BlocProvider(
+      create: (context) => LayoutCubit(),
+      child: const LayoutScreen(),
+    );
+  }
 }
 
-class _LayoutState extends State<Layout> with TickerProviderStateMixin {
+
+class LayoutScreen extends StatefulWidget {
+  const LayoutScreen({Key? key}) : super(key: key);
+
+  @override
+  _LayoutScreenState createState() => _LayoutScreenState();
+}
+
+class _LayoutScreenState extends State<LayoutScreen> with TickerProviderStateMixin {
   late LayoutCubit layoutCubit;
 
   @override
@@ -84,74 +62,66 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.of(context).size;
-    // SizeConfig().init(context);
-    return BlocProvider.value(
-      value: layoutCubit,
-      child: BlocConsumer<LayoutCubit, LayoutStates>(
-        buildWhen: (context, state) => state is LayoutChangeBottomNavState,
-        listenWhen: (context, state) => state is LayoutChangeBottomNavState,
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Container(
-              color: Colors.white,
-              child: AnimatedBuilder(
-                  animation: layoutCubit.animationController,
-                  builder: (context, snapshot) {
-                    double scale =
-                        .8 + .2 * (1 - layoutCubit.animationController.value);
-                    // double scaleSmall =
-                    //     .7 + .3 * (1 - layoutCubit.animationController.value);
-                    double reverse = -1;
-                    return Stack(
-                      children: [
-                        Transform.translate(
-                          offset: const Offset(0, 0),
-                          child: Container(
-                            height: SizeConfig.screenHeight,
-                            width: SizeConfig.screenWidth,
-                            color: Colors.blueGrey.withOpacity(.3),
-                            child: Column(
-                              children: const [
-                                Expanded(
-                                    child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: SafeArea(
-                                    child: SocialAccounts(),
-                                  ),
-                                )),
-                                SizedBox(height: 5),
-                              ],
-                            ),
+    return BlocConsumer<LayoutCubit, LayoutStates>(
+      buildWhen: (context, state) => state is LayoutChangeBottomNavState,
+      listenWhen: (context, state) => state is LayoutChangeBottomNavState,
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Container(
+            color: Colors.white,
+            child: AnimatedBuilder(
+                animation: layoutCubit.animationController,
+                builder: (context, snapshot) {
+                  double scale =
+                      .8 + .2 * (1 - layoutCubit.animationController.value);
+                  // double scaleSmall =
+                  //     .7 + .3 * (1 - layoutCubit.animationController.value);
+                  double reverse = -1;
+                  return Stack(
+                    children: [
+                      Transform.translate(
+                        offset: const Offset(0, 0),
+                        child: Container(
+                          height: SizeConfig.screenHeight,
+                          width: SizeConfig.screenWidth,
+                          color: Colors.blueGrey.withOpacity(.3),
+                          child: Column(
+                            children: const [
+                              Expanded(
+                                  child: Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: SafeArea(
+                                      child: SocialAccounts(),
+                                    ),
+                                  )),
+                              SizedBox(height: 10),
+                            ],
                           ),
                         ),
-                        // Opacity(
-                        //   opacity: .3,
-                        //   child: buildAnimationBody(
-                        //       scaleSmall, size, 130, reverse),
-                        // ),
-                        buildAnimationBody(
-                            scale, SizeConfig.size!, 80, reverse),
-                        Transform.translate(
-                            offset: Offset(
-                                -SizeConfig.size!.width *
-                                    (1 -
-                                        layoutCubit.animationController.value) *
-                                    reverse,
-                                0),
-                            child: AppDrawer(
-                              cubit: layoutCubit,
-                              items: navItems,
-                            )),
-                      ],
-                    );
-                  }),
-            ),
-          );
-        },
-      ),
+                      ),
+                      // Opacity(
+                      //   opacity: .3,
+                      //   child: buildAnimationBody(
+                      //       scaleSmall, size, 130, reverse),
+                      // ),
+                      buildAnimationBody(
+                          scale, SizeConfig.size!, 80, reverse),
+                      Transform.translate(
+                          offset: Offset(
+                              -SizeConfig.size!.width *
+                                  (1 -
+                                      layoutCubit.animationController.value) *
+                                  reverse,
+                              0),
+                          child: AppDrawer(cubit: layoutCubit)),
+                    ],
+                  );
+                }),
+          ),
+        );
+      },
     );
   }
 
@@ -241,60 +211,70 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
   //   );
   // }
 
-  AutoTabsScaffold buildScaffold(BuildContext context) {
-    return AutoTabsScaffold(
-      homeIndex: 0,
-      appBarBuilder: (context, tabsRouter) {
-        return AppBar(
-          backgroundColor: Colors.transparent,
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-              onPressed: () {
-                layoutCubit.openCloseDrawer(context);
-              },
-              icon: AnimatedIcon(
-                  progress: layoutCubit.menuButton,
-                  icon: AnimatedIcons.menu_close)),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  // layoutCubit.changeBottom(5);
-                  tabsRouter.setActiveIndex(5);
-                },
-                icon: Icon(layoutCubit.currentIndex == 5
-                    ? Icons.notifications
-                    : Icons.notifications_outlined)),
-            const Directionality(
-                textDirection: TextDirection.ltr, child: AutoBackButton()),
-          ],
-          title: Text(
-            tapsName[tabsRouter.topRoute.name] ?? '',
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        );
-        return AppBar(
-          title: Text(tabsRouter.topRoute.name),
-          leading: const AutoBackButton(),
-        );
-      },
-      routes: const [
-        HomeTab(),
-        FavouriteTab(),
-        MyCoursesTab(),
-        SearchTab(),
-        ProfileTab(),
-        NotificationsTab(),
-        CategoriesTab(),
-        EndorsementsTab(),
-        TrainersTab(),
-        ExamsTab(),
-        ServicesTab(),
-        AboutTab(),
-        ContactTab(),
-      ],
-      bottomNavigationBuilder: buildBottomNav,
+  Container buildScaffold(BuildContext context) {
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(radius)),
+      child: AutoTabsScaffold(
+        homeIndex: 0,
+        backgroundColor: Colors.transparent,
+        // extendBody: true,
+        appBarBuilder: (context, tabsRouter) {
+          return AppBar(
+            backgroundColor: Colors.transparent,
+            automaticallyImplyLeading: false,
+            leading: IconButton(
+                onPressed: () => layoutCubit.openCloseDrawer(context),
+                icon: AnimatedIcon(
+                    progress: layoutCubit.menuButton,
+                    icon: AnimatedIcons.menu_close)),
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    // layoutCubit.changeBottom(5);
+                    tabsRouter.setActiveIndex(5);
+                  },
+                  icon: Icon(layoutCubit.currentIndex == 5
+                      ? Icons.notifications
+                      : Icons.notifications_outlined)),
+              const Directionality(
+                  textDirection: TextDirection.ltr, child: AutoBackButton()),
+            ],
+            title: Text(
+              tapsTitle[tabsRouter.topRoute.name] ?? '',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline5,
+            ),
+          );
+          return AppBar(
+            title: Text(tabsRouter.topRoute.name),
+            leading: const AutoBackButton(),
+          );
+        },
+        routes: const [
+          HomeTab(),
+          FavouriteTab(),
+          MyCoursesTab(),
+          SearchTab(),
+          ProfileTab(),
+          NotificationsTab(),
+          CategoriesTab(),
+          EndorsementsTab(),
+          TrainersTab(),
+          ExamsTab(),
+          ServicesTab(),
+          AboutTab(),
+          ContactTab(),
+        ],
+        bottomNavigationBuilder: buildBottomNav,
+      ),
     );
   }
+
+  double get radius => layoutCubit.animationController.isCompleted ? 20 : 0;
 
   Widget buildBottomNav(BuildContext context, TabsRouter tabsRouter) {
     final hideBottomNav = tabsRouter.topMatch.meta['hideBottomNavf'] == true;
@@ -302,61 +282,55 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
     return hideBottomNav
         ? const SizedBox.shrink()
         : BottomAppBar(
-            elevation: 10,
-            shape: const AutomaticNotchedShape(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                ),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  NavigationIcon(
-                    navItems: navItems,
-                    cubit: layoutCubit,
-                    index: Taps.home,
-                    icon: 'assets/images/Icon material-featured-play-list.png',
-                    filledIcon:
-                        'assets/images/Icon material-featured-play-list-1.png',
-                  ),
-                  NavigationIcon(
-                    navItems: navItems,
-                    cubit: layoutCubit,
-                    index: Taps.favourites,
-                    icon: 'assets/images/Icon awesome-heart-1.png',
-                    filledIcon: 'assets/images/Icon awesome-heart.png',
-                  ),
-                  NavigationIcon(
-                    navItems: navItems,
-                    cubit: layoutCubit,
-                    index: Taps.myCourses,
-                    icon: 'assets/images/Icon awesome-user-edit-1.png',
-                    filledIcon: 'assets/images/Icon awesome-user-edit.png',
-                  ),
-                  NavigationIcon(
-                    navItems: navItems,
-                    cubit: layoutCubit,
-                    index: Taps.search,
-                    icon: 'assets/images/Shape -1.png',
-                    filledIcon: 'assets/images/Shape 541.png',
-                  ),
-                  NavigationIcon(
-                    navItems: navItems,
-                    cubit: layoutCubit,
-                    index: Taps.profile,
-                    icon: 'assets/images/Group 14.png',
-                    filledIcon: 'assets/images/Group 17.png',
-                  ),
-                ],
-              ),
-            ),
-          );
+      elevation: 10,
+      shape: AutomaticNotchedShape(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            // topLeft: Radius.circular(20),
+            // topRight: Radius.circular(20),
+            bottomLeft: Radius.circular(radius),
+            bottomRight: Radius.circular(radius),
+          ),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          NavigationIcon(
+            cubit: layoutCubit,
+            index: Taps.home,
+            icon: 'assets/images/Icon material-featured-play-list.png',
+            filledIcon:
+            'assets/images/Icon material-featured-play-list-1.png',
+          ),
+          NavigationIcon(
+            cubit: layoutCubit,
+            index: Taps.favourites,
+            icon: 'assets/images/Icon awesome-heart-1.png',
+            filledIcon: 'assets/images/Icon awesome-heart.png',
+          ),
+          NavigationIcon(
+            cubit: layoutCubit,
+            index: Taps.myCourses,
+            icon: 'assets/images/Icon awesome-user-edit-1.png',
+            filledIcon: 'assets/images/Icon awesome-user-edit.png',
+          ),
+          NavigationIcon(
+            cubit: layoutCubit,
+            index: Taps.search,
+            icon: 'assets/images/Shape -1.png',
+            filledIcon: 'assets/images/Shape 541.png',
+          ),
+          NavigationIcon(
+            cubit: layoutCubit,
+            index: Taps.profile,
+            icon: 'assets/images/Group 14.png',
+            filledIcon: 'assets/images/Group 17.png',
+          ),
+        ],
+      ),
+    );
 
     // BottomNavigationBar(
     //         backgroundColor: Colors.white,
@@ -390,8 +364,8 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
     //       );
   }
 
-  Transform buildAnimationBody(
-      double scale, Size size, double move, double revers) {
+  Transform buildAnimationBody(double scale, Size size, double move,
+      double revers) {
     return Transform(
         transform: Matrix4.identity()
           ..scale(scale, scale)
@@ -406,7 +380,9 @@ class _LayoutState extends State<Layout> with TickerProviderStateMixin {
             WillPopScope(
               child: buildScaffold(context),
               onWillPop: () async {
-                layoutCubit.openCloseDrawer(context);
+                layoutCubit.animationController.isCompleted
+                    ? layoutCubit.reverse()
+                    : null;
                 if (!layoutCubit.tabsRouter.isTopMost) {
                   layoutCubit.tabsRouter.navigateBack();
                   return true;

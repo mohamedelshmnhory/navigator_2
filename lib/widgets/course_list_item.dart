@@ -1,26 +1,27 @@
 import 'package:beautyapp/layout/cubit/cubit.dart';
-import 'package:beautyapp/layout/layout.dart';
+import 'package:beautyapp/layout/cubit/states.dart';
 import 'package:beautyapp/models/courses_model.dart';
 import 'package:beautyapp/routes/router.gr.dart';
 import 'package:beautyapp/shared/components/components.dart';
 import 'package:beautyapp/shared/components/constants.dart';
 import 'package:beautyapp/shared/styles/colors.dart';
-import 'package:beautyapp/shared/utils/size_config.dart';
+import 'package:beautyapp/widgets/should_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:lottie/lottie.dart';
 import 'photo_widget.dart';
 import 'package:auto_route/auto_route.dart';
 
 class CourseListItem extends StatefulWidget {
-  CourseListItem({
+  const CourseListItem({
     Key? key,
     required this.course,
-    this.isFav = true,
+    this.isSearch = false,
   }) : super(key: key);
 
   final Course course;
-  bool isFav;
+  final bool isSearch;
 
   @override
   State<CourseListItem> createState() => _CourseListItemState();
@@ -51,7 +52,7 @@ class _CourseListItemState extends State<CourseListItem> {
               width: double.infinity,
               decoration:
                   BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              child: PhotoWidget(photoLink: bannerImages[0], canOpen: false)),
+              child: PhotoWidget(photoLink: course.image, canOpen: false)),
           Positioned(
             bottom: 0,
             right: 0,
@@ -74,26 +75,28 @@ class _CourseListItemState extends State<CourseListItem> {
                 children: [
                   Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          course.name ?? '',
+                          course.name!.trim(),
                           style: Theme.of(context)
                               .textTheme
                               .headline5!
-                              .copyWith(color: Colors.white),
+                              .copyWith(color: Colors.white, fontSize: 15),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
                           textDirection: TextDirection.rtl,
                         ),
+                        const SizedBox(height: 3),
                         defaultButton(
                           width: 130,
                           height: 35,
                           function: () {
                             context.router.push(CourseDetailsScreen(
-                                courseId: course.id!.toInt()));
+                              id: course.id!.toInt(),
+                            ));
                           },
                           text: 'التفاصيل',
                           textSize: 14,
@@ -106,7 +109,7 @@ class _CourseListItemState extends State<CourseListItem> {
                   ),
                   Expanded(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Row(
@@ -145,7 +148,7 @@ class _CourseListItemState extends State<CourseListItem> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 2),
+                        const SizedBox(height: 3),
                         IntrinsicHeight(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -159,7 +162,7 @@ class _CourseListItemState extends State<CourseListItem> {
                                     color: Colors.white,
                                   ),
                                   Text(
-                                    '20',
+                                    course.duration.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline3!
@@ -177,7 +180,7 @@ class _CourseListItemState extends State<CourseListItem> {
                                     color: Colors.white,
                                   ),
                                   Text(
-                                    '100',
+                                    course.price.toString(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline3!
@@ -213,23 +216,42 @@ class _CourseListItemState extends State<CourseListItem> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  widget.isFav = !widget.isFav;
-                });
+          if (!widget.isSearch)
+            BlocConsumer<LayoutCubit, LayoutStates>(
+              listener: (context, state) {
+                if (state is FavouriteErrorState) {
+                  setState(() {
+                    course.is_fav = !course.is_fav!;
+                  });
+                }
               },
-              child: widget.isFav
-                  ? Lottie.asset('assets/images/59461-heart-beat-pop-up.json',
-                      height: 50, repeat: false)
-                  : const SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: Icon(Icons.favorite_border, color: primary)),
+              builder: (context, state) {
+                return Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (userToken != '') {
+                        setState(() {
+                          course.is_fav = !course.is_fav!;
+                        });
+                        LayoutCubit.get(context).toggleFav(course: course);
+                      } else {
+                        showLoginDialog(context);
+                      }
+                    },
+                    child: course.is_fav!
+                        ? Lottie.asset(
+                            'assets/images/59461-heart-beat-pop-up.json',
+                            height: 50,
+                            repeat: false)
+                        : const SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: Icon(Icons.favorite_border, color: primary)),
+                  ),
+                );
+              },
             ),
-          ),
         ],
       ),
     );

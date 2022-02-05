@@ -1,14 +1,9 @@
+import 'package:beautyapp/models/services_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Service {
-  final String image;
-  final String name;
-  Service({
-    required this.image,
-    required this.name,
-  });
-}
+import 'photo_widget.dart';
+
 
 class ServiceItem extends StatelessWidget {
   final Service service;
@@ -33,13 +28,13 @@ class ServiceItem extends StatelessWidget {
         // ],
         borderRadius: BorderRadius.circular(10),
       ),
-      height: 120,
+      height: 140,
       width: double.infinity,
       child: Stack(
         alignment: Alignment.center,
         children: [
           Container(
-            height: 100,
+            height: 120,
             width: double.infinity,
             clipBehavior: Clip.hardEdge,
             decoration: BoxDecoration(
@@ -51,20 +46,20 @@ class ServiceItem extends StatelessWidget {
               //     offset: const Offset(0, 0), // changes position of shadow
               //   ),
               // ],
-              image: DecorationImage(
-                  image: AssetImage(service.image), fit: BoxFit.cover),
+              // image: DecorationImage(
+              //     image: AssetImage(service.image!), fit: BoxFit.cover),
               borderRadius: BorderRadius.circular(10),
             ),
-          ),
+              child: PhotoWidget(photoLink: service.image, canOpen: false)),
           Container(
-            height: 100,
+            height: 120,
             decoration: BoxDecoration(
               color: Colors.black26,
               borderRadius: BorderRadius.circular(10),
             ),
           ),
           Text(
-            service.name,
+            service.name!,
             style: const TextStyle(
                 fontSize: 30,
                 fontFamily: 'jozoor',

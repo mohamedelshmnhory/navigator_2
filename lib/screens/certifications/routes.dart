@@ -3,13 +3,13 @@ import 'package:beautyapp/layout/taps_name.dart';
 import 'endorsements_screen.dart';
 
 const endorsementsTab = AutoRoute(
-  path: 'endorsements',
+  path: 'certifications',
   page: EmptyRouterPage,
   name: 'EndorsementsTab',
   children: [
     AutoRoute(
       path: '',
-      page: EndorsementsScreen,
+      page: CertificationScreen,
       name: endorsements,
     ),
   ],

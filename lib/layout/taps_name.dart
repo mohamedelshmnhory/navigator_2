@@ -21,7 +21,7 @@ const trainerDetails = 'TrainerDetailsScreen';
 const competitionsList = 'CompetitionsListScreen';
 const competitionDetails = 'CompetitionDetailsScreen';
 
-const tapsName = {
+const tapsTitle = {
   home: 'الرئيسية',
   favourite: 'المفضلة',
   myCourses: 'تدريباتي',
@@ -45,3 +45,39 @@ const tapsName = {
   competitionsList: 'مسابقات',
   competitionDetails: 'مسابقة',
 };
+
+class Taps {
+  static const int home = 0;
+  static const int favourites = 1;
+  static const int myCourses = 2;
+  static const int search = 3;
+  static const int profile = 4;
+  static const int notifications = 5;
+  static const int courses = 6;
+  static const int endorsements = 7;
+  static const int trainers = 8;
+  static const int exams = 9;
+  static const int services = 10;
+  static const int about = 11;
+  static const int contact = 12;
+  static const int share = 13;
+  static const int logout = 14;
+}
+
+const List<String> navTaps = [
+  'الرئيسية',
+  'المفضلة',
+  'تدريباتي',
+  'البحث',
+  'البروفايل',
+  'الاشعارات',
+  'دوراتنا',
+  'الاعتمادات',
+  'الخبراء',
+  'الإختبارات',
+  'الخدمات',
+  'قالو عنا',
+  'اتصل بنا',
+  'مشاركة',
+  'تسجيل الخروج',
+];

@@ -2,8 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:beautyapp/layout/taps_name.dart';
 import 'package:beautyapp/screens/competitions/competition_details_screen.dart';
 import 'package:beautyapp/screens/competitions/competitions_list_screen.dart';
-import 'package:beautyapp/screens/courses/course_details_screen.dart';
 import 'package:beautyapp/screens/courses/courses_list_screen.dart';
+import 'package:beautyapp/screens/courses/routes.dart';
 import 'package:beautyapp/screens/home/home_screen.dart';
 import '../services/service_details_screen.dart';
 import '../trainers/trainer_details_screen.dart';
@@ -23,11 +23,7 @@ const homeTab = AutoRoute(
       page: CoursesListScreen,
       meta: {'hideBottomNav': true},
     ),
-    AutoRoute(
-      path: ':courseId',
-      page: CourseDetailsScreen,
-      meta: {'hideBottomNav': true},
-    ),
+    courseScreen,
     AutoRoute(
       path: ':service',
       page: ServiceDetailsScreen,

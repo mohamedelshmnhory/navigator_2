@@ -6,6 +6,7 @@ import 'package:beautyapp/shared/components/image_paths.dart';
 import 'package:beautyapp/shared/network/local/cache_helper.dart';
 import 'package:beautyapp/shared/utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -16,9 +17,6 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-  var _visible = true;
-  late final Timer timer;
-
   late AnimationController animationController;
   late Animation<double> animation;
 
@@ -28,28 +26,21 @@ class SplashScreenState extends State<SplashScreen>
   }
 
   void navigationPage() {
-    // Navigator.of(context)
-    //     .push(MaterialPageRoute(builder: (_) => const AuthHome()));
-
     context.router.replace(landing());
   }
 
   landing() {
-    dynamic start;
     userToken = CacheHelper.getData(key: 'userToken') ?? '';
     if (userToken != '') {
-      start = const Layout();
+      return const Layout();
     } else {
-      start = const Layout();
-      // start = const LoginScreen();
+      return const Layout();
     }
-    return start;
   }
 
   @override
   dispose() {
     animationController.dispose();
-    // timer.cancel();
     super.dispose();
   }
 
@@ -68,11 +59,25 @@ class SplashScreenState extends State<SplashScreen>
     animation.addListener(() => setState(() {}));
     animationController.forward();
 
-    setState(() {
-      _visible = !_visible;
-    });
     startTime();
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   SizeConfig().init(context);
+  //   return Scaffold(
+  //     backgroundColor: Colors.white,
+  //     body: Lottie.asset(
+  //       'assets/images/animation_splash_brada.json',
+  //       height: SizeConfig.screenHeight,
+  //       width: SizeConfig.screenWidth,
+  //       onLoaded: (v) {
+  //         navigationPage();
+  //       },
+  //       repeat: false,
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ class SocialAccounts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 20,
+      height: 25,
       child: ListView.separated(
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(horizontal: 15),

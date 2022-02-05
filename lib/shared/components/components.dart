@@ -80,6 +80,7 @@ Widget defaultFormField({
   double prefixWidth = 45,
   direction = TextDirection.rtl,
   inputAction = TextInputAction.done,
+  boarderColor = mainColor,
 }) =>
     TextFormField(
       controller: controller,
@@ -106,21 +107,21 @@ Widget defaultFormField({
         contentPadding:
             const EdgeInsets.symmetric(vertical: 0.0, horizontal: 10.0),
         // border: InputBorder.none,
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          borderSide: BorderSide(color: mainColor, width: 1.5),
+        border: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          borderSide: BorderSide(color: boarderColor, width: 1.5),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: mainColor, width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: boarderColor, width: 1.5),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: mainColor, width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: boarderColor, width: 1.5),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
-        disabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: mainColor, width: 1.5),
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: boarderColor, width: 1.5),
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
         ),
         prefixIcon: Icon(
           prefix,
@@ -133,7 +134,7 @@ Widget defaultFormField({
                 icon: Icon(
                   suffix,
                   color: mainColor,
-                  size: 25,
+                  size: 20,
                 ),
               )
             : null,
@@ -166,19 +167,19 @@ enum SnackStates { SUCCESS, ERROR, WARNING }
 Color? chooseToastColor(SnackStates state) {
   switch (state) {
     case SnackStates.SUCCESS:
-      return mainColor.withOpacity(.5);
+      return Colors.green.withOpacity(.8);
     case SnackStates.ERROR:
-      return Colors.redAccent.withOpacity(.5);
+      return Colors.redAccent.withOpacity(.8);
     case SnackStates.WARNING:
-      return Colors.orangeAccent.withOpacity(.5);
+      return Colors.orangeAccent.withOpacity(.8);
   }
 }
 
 const spinkit = Center(
-  child: SpinKitRing(
+  child: SpinKitSpinningLines(
     color: mainColor,
     size: 40.0,
-    lineWidth: 5,
+    lineWidth: 2,
     duration: Duration(milliseconds: 800),
   ),
 );
@@ -267,6 +268,14 @@ Stack buildDropdownMenu({
   );
 }
 
+VerticalDivider get buildVerticalDivider {
+  return const VerticalDivider(
+    color: mainColor,
+    thickness: 1.5,
+    indent: 5,
+    endIndent: 5,
+  );
+}
 
 // void navigateTo(context, widget) => Navigator.push(
 //       context,

@@ -12,21 +12,22 @@ import 'package:beautyapp/widgets/should_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatefulWidget  {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>    {
   UserModel? _userModel;
+
   @override
   void initState() {
     super.initState();
     AuthCubit.get(context).getProfile();
-    _userModel = AuthCubit.get(context).loginModel;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         if (state is ProfileSuccessState) {
           _userModel = state.loginModel;
         }
+        if (state is EditProfileSuccessState) {
+          _userModel = state.loginModel;
+        }
         if (state is ProfileErrorState) {
           internetAlert(() {
             AuthCubit.get(context).getProfile();
-            _userModel = AuthCubit.get(context).loginModel;
           });
         }
       },

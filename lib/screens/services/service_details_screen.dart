@@ -1,8 +1,10 @@
+import 'package:beautyapp/models/services_model.dart';
 import 'package:beautyapp/shared/components/components.dart';
 import 'package:beautyapp/shared/styles/colors.dart';
 import 'package:beautyapp/widgets/photo_widget.dart';
 import 'package:beautyapp/widgets/service_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ServiceDetailsScreen extends StatelessWidget {
   final Service service;
@@ -20,7 +22,7 @@ class ServiceDetailsScreen extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                service.name,
+                service.name!,
                 style: Theme.of(context)
                     .textTheme
                     .headline5!
@@ -45,24 +47,26 @@ class ServiceDetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'يعني أيه براند ؟',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline5!
-                        .copyWith(fontSize: 16),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    textDirection: TextDirection.rtl,
-                  ),
-                  Text(
-                    'البراند أو صناعة الهوية هي عملية تسويقية معقدة جدا الهدفمنها هو صناعة شخصية وهوية للمنتج اللي انت بتقدمه كلام مجعلص مش كده نبسطها شوية ،عارف لما بيكون ليك صديق انت عارفه من زمان لدرجة أنك بمجرد ما بتسمع صوته في التليفون او في الشارع بتعرفه أو مثلا شفته ماشي من بعيد هتتعرف عليه و أحاينالدرجة أنك ممكن أحيانا تعرفة من ريحه البرفان الخاص بيه أهو ده بقي البراند زي كده بمعني انك لو شفت كانزاية لونها أحمر وأزرق من غير لوجو هتعرف أنها بيبسي أو لو شفت علامه صح علي تي تيشرت هتعرف أنها نايك  أو علامه حرف M علي محل لونه أصفر في أحمر هتعرف أنه ماكدونالدز ',
-                    style: Theme.of(context).textTheme.headline3!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Colors.black),
-                    textDirection: TextDirection.rtl,
-                  ),
+                  Html(data: service.description),
+                  Html(data: service.fullDescription),
+                  // Text(
+                  //   'يعني أيه براند ؟',
+                  //   style: Theme.of(context)
+                  //       .textTheme
+                  //       .headline5!
+                  //       .copyWith(fontSize: 16),
+                  //   maxLines: 1,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   textDirection: TextDirection.rtl,
+                  // ),
+                  // Text(
+                  //   'البراند أو صناعة الهوية هي عملية تسويقية معقدة جدا الهدفمنها هو صناعة شخصية وهوية للمنتج اللي انت بتقدمه كلام مجعلص مش كده نبسطها شوية ،عارف لما بيكون ليك صديق انت عارفه من زمان لدرجة أنك بمجرد ما بتسمع صوته في التليفون او في الشارع بتعرفه أو مثلا شفته ماشي من بعيد هتتعرف عليه و أحاينالدرجة أنك ممكن أحيانا تعرفة من ريحه البرفان الخاص بيه أهو ده بقي البراند زي كده بمعني انك لو شفت كانزاية لونها أحمر وأزرق من غير لوجو هتعرف أنها بيبسي أو لو شفت علامه صح علي تي تيشرت هتعرف أنها نايك  أو علامه حرف M علي محل لونه أصفر في أحمر هتعرف أنه ماكدونالدز ',
+                  //   style: Theme.of(context).textTheme.headline3!.copyWith(
+                  //       fontWeight: FontWeight.bold,
+                  //       fontSize: 14,
+                  //       color: Colors.black),
+                  //   textDirection: TextDirection.rtl,
+                  // ),
                   const SizedBox(height: 15),
                   defaultButton(
                       width: 170,

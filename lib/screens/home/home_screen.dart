@@ -1,6 +1,5 @@
 import 'package:beautyapp/layout/cubit/cubit.dart';
 import 'package:beautyapp/layout/cubit/states.dart';
-import 'package:beautyapp/layout/layout.dart';
 import 'package:beautyapp/routes/router.gr.dart';
 import 'package:beautyapp/shared/components/components.dart';
 import 'package:beautyapp/shared/components/constants.dart';
@@ -25,6 +24,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late LayoutCubit layoutCubit;
+  final ScrollController scrollController = ScrollController();
+
   @override
   void initState() {
     layoutCubit = LayoutCubit.get(context)..getHome();
@@ -32,17 +33,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<LayoutCubit, LayoutStates>(
-      listenWhen: (context, state) => state is HomeErrorState,
+      listenWhen: (context, state) =>
+          state is HomeErrorState || state is HomeScrollTopState,
       buildWhen: (context, state) => state is HomeSuccessState,
       listener: (context, state) {
+        if (state is HomeScrollTopState) {
+          scrollController.animateTo(0,
+              duration: const Duration(milliseconds: 500),
+              curve: Curves.easeIn);
+        }
         if (state is HomeErrorState) {
           internetAlert(() {
             layoutCubit.getHome();
           });
         }
-        print('ol');
       },
       builder: (context, state) {
         return RefreshIndicator(
@@ -53,11 +65,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ? spinkit
               : SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
+                  controller: scrollController,
                   child: Column(
                     children: [
                       GestureDetector(
                         onTap: () {
                           showModalBottomSheet(
+                              backgroundColor: Colors.transparent,
                               builder: (context) => const VideoScreen(link: ''),
                               isScrollControlled: true,
                               useRootNavigator: true,
@@ -121,13 +135,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           shrinkWrap: true,
                           padding: const EdgeInsets.symmetric(horizontal: 15),
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: services.length,
+                          itemCount:
+                              layoutCubit.homeModel!.data!.services!.length,
                           itemBuilder: (context, i) => InkWell(
                               onTap: () {
-                                context.router.push(
-                                    ServiceDetailsScreen(service: services[i]));
+                                context.router.push(ServiceDetailsScreen(
+                                    service: layoutCubit
+                                        .homeModel!.data!.services![i]));
                               },
-                              child: ServiceItem(service: services[i]))),
+                              child: ServiceItem(
+                                  service: layoutCubit
+                                      .homeModel!.data!.services![i]))),
                       const SizedBox(height: 10),
                       Text(
                         'أفضل الخبراء والمدربين',
@@ -146,14 +164,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisSpacing: 20,
                           childAspectRatio: 100 / 80,
                           children: List.generate(
-                            trainers.length,
+                            layoutCubit.homeModel!.data!.instructors!.length,
                             (index) => InkWell(
                                 onTap: () {
                                   context.pushRoute(TrainerDetailsScreen(
-                                      category: students[index]));
+                                      trainer: layoutCubit.homeModel!.data!
+                                          .instructors![index]));
                                 },
                                 child: CategoryItem(
-                                    category: students[index], size: 100)),
+                                    text: layoutCubit.homeModel!.data!
+                                        .instructors![index].name,
+                                    image: layoutCubit.homeModel!.data!
+                                        .instructors![index].image,
+                                    size: 100)),
                           ),
                         ),
                       ),

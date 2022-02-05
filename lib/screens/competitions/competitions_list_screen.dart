@@ -35,7 +35,7 @@ class CompetitionsListScreen extends StatelessWidget {
               itemBuilder: (context, i) => Row(
                 children: [
                   Container(
-                    height: 120,
+                    height: 110,
                     width: 100,
                     clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
@@ -52,27 +52,40 @@ class CompetitionsListScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('أفضل مصممة أزياء',
-                          style: Theme.of(context).textTheme.headline2),
-                      const Text('مسابقة أفضل مصممة أزياء علي العالم '),
-                      const Text('مسابقة أفضل مصممة أزياء علي العالم '),
-                      const SizedBox(height: 5),
-                      defaultButton(
-                          width: 150,
-                          height: 30,
-                          function: () {
-                           context.router.push(CompetitionDetailsScreen(title: 'أفضل مصممة أزياء'));
-                          },
-                          text: 'التفاصيل',
-                          textSize: 14,
-                          radius: 5,
-                          background: mainColor,
-                          textColor: Colors.white),
-                    ],
+                  Expanded(
+                    child:  Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'أفضل مصممة أزياء',
+                            style: Theme.of(context).textTheme.headline2,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textDirection: TextDirection.rtl,
+                          ),
+                          const Text(
+                            'مسابقة أفضل مصممة أزياء علي العالم مسابقة أفضل مصممة أزياء علي العالم',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textDirection: TextDirection.rtl,
+                          ),
+                          const SizedBox(height: 5),
+                          defaultButton(
+                              width: 120,
+                              height: 25,
+                              function: () => context.router.push(
+                                  CompetitionDetailsScreen(
+                                      title: 'أفضل مصممة أزياء')),
+                              text: 'التفاصيل',
+                              textSize: 10,
+                              radius: 5,
+                              background: mainColor,
+                              textColor: Colors.white),
+                        ],
+                      ),
+
                   ),
                 ],
               ),

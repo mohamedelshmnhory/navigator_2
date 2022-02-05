@@ -53,8 +53,7 @@ class PhotoWidget extends StatelessWidget {
   }
 
   ExtendedImage image() {
-    return photoLink!.contains('.png') ||
-           photoLink!.contains('.jpeg')
+    return !photoLink!.contains('http')
         ? ExtendedImage.asset(photoLink!,
             fit: BoxFit.cover,
             enableSlideOutPage: true,
@@ -74,7 +73,7 @@ class PhotoWidget extends StatelessWidget {
                 case LoadState.failed:
                   return GestureDetector(
                     child: const Center(
-                      child: Text("Reload"),
+                      child: Icon(Icons.refresh),
                     ),
                     onTap: () {
                       state.reLoadImage();

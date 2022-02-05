@@ -25,7 +25,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 120,
+                      height: 110,
                       width: 100,
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
@@ -37,21 +37,33 @@ class CompetitionDetailsScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         child: const PhotoWidget(
                             photoLink:
-                                'https://images.unsplash.com/photo-1567345492986-12e7f1dead72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+                            'https://images.unsplash.com/photo-1567345492986-12e7f1dead72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
                             canOpen: false),
                       ),
                     ),
                     const SizedBox(width: 10),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('أفضل مصممة أزياء',
-                            style: Theme.of(context).textTheme.headline2),
-                        const Text('مسابقة أفضل مصممة أزياء علي العالم '),
-                        const Text('مسابقة أفضل مصممة أزياء علي العالم '),
-                        const SizedBox(height: 5),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'أفضل مصممة أزياء',
+                            style: Theme.of(context).textTheme.headline2,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textDirection: TextDirection.rtl,
+                          ),
+                          const Text(
+                            'مسابقة أفضل مصممة أزياء علي العالم مسابقة أفضل مصممة أزياء علي العالم',
+                            style: TextStyle(color: Colors.black, fontSize: 12),
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            textDirection: TextDirection.rtl,
+                          ),
+
+                        ],
+                      ),
                     ),
                   ],
                 ),

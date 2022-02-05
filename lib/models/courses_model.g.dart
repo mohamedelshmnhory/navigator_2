@@ -7,11 +7,11 @@ part of 'courses_model.dart';
 // **************************************************************************
 
 CoursesModel _$CoursesModelFromJson(Map<String, dynamic> json) => CoursesModel(
-      data: (json['data'] as List<dynamic>)
-          .map((e) => Course.fromJson(e as Map<String, dynamic>))
+      data: (json['data'] as List<dynamic>?)
+          ?.map((e) => Course.fromJson(e as Map<String, dynamic>))
           .toList(),
-      message: json['message'] as String,
-      status: json['status'] as bool,
+      message: json['message'] as String?,
+      status: json['status'] as bool?,
     );
 
 Map<String, dynamic> _$CoursesModelToJson(CoursesModel instance) =>
@@ -40,6 +40,7 @@ Course _$CourseFromJson(Map<String, dynamic> json) => Course(
       categories_id: json['categories_id'] as num?,
       created_at: json['created_at'] as String?,
       updated_at: json['updated_at'] as String?,
+      is_fav: json['is_fav'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
@@ -61,4 +62,5 @@ Map<String, dynamic> _$CourseToJson(Course instance) => <String, dynamic>{
       'categories_id': instance.categories_id,
       'created_at': instance.created_at,
       'updated_at': instance.updated_at,
+      'is_fav': instance.is_fav,
     };

@@ -1,3 +1,5 @@
+import 'package:beautyapp/models/services_model.dart';
+import 'package:beautyapp/models/trainers_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'home_model.g.dart';
@@ -20,10 +22,10 @@ class DataBean {
   List<BannersBean>? banners;
   List<CategoryBean>? Category;
   List<CompetitonsBean>? competitons;
-  List<InstructorsBean>? instructors;
+  List<Trainer>? instructors;
   List<OffersBean>? offers;
   List<StudentsBean>? students;
-  dynamic services;
+  List<Service>? services;
   List<VideoBean>? Video;
 
   DataBean({this.banners, this.Category, this.competitons, this.instructors, this.offers, this.students, this.services, this.Video});
@@ -72,18 +74,6 @@ class OffersBean {
   Map<String, dynamic> toJson() => _$OffersBeanToJson(this);
 }
 
-@JsonSerializable()
-class InstructorsBean {
-  num? id;
-  String? name;
-  String? image;
-
-  InstructorsBean({this.id, this.name, this.image});
-
-  factory InstructorsBean.fromJson(Map<String, dynamic> json) => _$InstructorsBeanFromJson(json);
-
-  Map<String, dynamic> toJson() => _$InstructorsBeanToJson(this);
-}
 
 @JsonSerializable()
 class CompetitonsBean {

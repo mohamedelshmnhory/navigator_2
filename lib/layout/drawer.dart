@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:beautyapp/layout/layout.dart';
 import 'package:beautyapp/routes/router.gr.dart';
 import 'package:beautyapp/shared/components/constants.dart';
 import 'package:beautyapp/shared/components/image_paths.dart';
@@ -11,24 +10,18 @@ import 'package:beautyapp/widgets/should_login.dart';
 import 'package:flutter/material.dart';
 
 import 'cubit/cubit.dart';
+import 'taps_name.dart';
 
 class AppDrawer extends StatelessWidget {
   final LayoutCubit cubit;
-  final List<String> items;
-
-  const AppDrawer({
-    Key? key,
-    required this.cubit,
-    required this.items,
-  }) : super(key: key);
+  const AppDrawer({Key? key, required this.cubit}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Container(
         color: Colors.transparent,
-        width: size.width - 130,
+        width: SizeConfig.screenWidth! - 130,
         padding: const EdgeInsets.only(right: 20, bottom: 70),
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
@@ -42,37 +35,42 @@ class AppDrawer extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               DrawerButton(
+                  token: false,
                   icon: getAssetImage(ImagePathName.cert),
                   cubit: cubit,
-                  item: items[Taps.courses],
+                  item: navTaps[Taps.courses],
                   onTap: () {
                     cubit.changeBottom(Taps.courses);
                   }),
               DrawerButton(
+                  token: false,
                   icon: getAssetImage(ImagePathName.cert),
                   cubit: cubit,
-                  item: items[Taps.endorsements],
+                  item: navTaps[Taps.endorsements],
                   onTap: () {
                     cubit.changeBottom(Taps.endorsements);
                   }),
               DrawerButton(
+                  token: false,
                   icon: getAssetImage(ImagePathName.cert),
                   cubit: cubit,
-                  item: items[Taps.trainers],
+                  item: navTaps[Taps.trainers],
                   onTap: () {
                     cubit.changeBottom(Taps.trainers);
                   }),
               DrawerButton(
+                  token: false,
                   icon: getAssetImage(ImagePathName.cert),
                   cubit: cubit,
-                  item: items[Taps.exams],
+                  item: navTaps[Taps.exams],
                   onTap: () {
                     cubit.changeBottom(Taps.exams);
                   }),
               DrawerButton(
+                  token: false,
                   icon: getAssetImage(ImagePathName.cert),
                   cubit: cubit,
-                  item: items[Taps.services],
+                  item: navTaps[Taps.services],
                   onTap: () {
                     cubit.changeBottom(Taps.services);
                   }),
@@ -80,14 +78,15 @@ class AppDrawer extends StatelessWidget {
                   token: false,
                   icon: getAssetImage(ImagePathName.about),
                   cubit: cubit,
-                  item: items[Taps.about],
+                  item: navTaps[Taps.about],
                   onTap: () {
                     cubit.changeBottom(Taps.about);
                   }),
               DrawerButton(
+                  token: false,
                   icon: getAssetImage(ImagePathName.contact),
                   cubit: cubit,
-                  item: items[Taps.contact],
+                  item: navTaps[Taps.contact],
                   onTap: () {
                     cubit.changeBottom(Taps.contact);
                   }),
@@ -95,14 +94,15 @@ class AppDrawer extends StatelessWidget {
                   token: false,
                   icon: getAssetImage(ImagePathName.share),
                   cubit: cubit,
-                  item: items[Taps.share],
+                  item: navTaps[Taps.share],
                   onTap: () {
                     ShareApp.share();
                   }),
               DrawerButton(
+                  token: false,
                   icon: getAssetImage(ImagePathName.logout),
                   cubit: cubit,
-                  item: items[Taps.logout],
+                  item: userToken == '' ? 'تسجيل الدخول' : 'تسجيل الخروج',
                   onTap: () {
                     userToken = '';
                     CacheHelper.removeData(
